@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<launch>
+
+        <!-- Node for Arduino 1 -->
+        <node name="arduino_node1" pkg="rosserial_python" type="serial_node.py" output="screen">
+            <param name="serial_port" value="/dev/ttyUSB0" />
+            <param name="baud_rate" value="57600" />
+        </node>
+
+        <!-- Node for Arduino 2 -->
+        <node name="arduino_node2" pkg="my_arduino_package" type="arduino_node2.py" output="screen">
+            <param name="serial_port" value="/dev/ttyUSB1" />
+            <param name="baud_rate" value="57600" />
+        </node>
+
+</launch>
