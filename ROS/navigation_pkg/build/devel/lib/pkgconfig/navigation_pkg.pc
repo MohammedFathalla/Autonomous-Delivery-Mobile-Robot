@@ -1,8 +1,0 @@
-prefix=/home/mohamed/work_ws/src/Graduation/navigation_pkg/build/devel
-
-Name: navigation_pkg
-Description: Description of navigation_pkg
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
