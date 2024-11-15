@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Arguments -->
+  <arg name="scan_topic"     default="/filtered_scan"/>
+  <arg name="initial_pose_x" default="0.0"/>  
+  <arg name="initial_pose_y" default="0.0"/>
+  <arg name="initial_pose_a" default="0.0"/>
+
+  <!-- AMCL -->
+  <node pkg="amcl" type="amcl" name="amcl">
+
+    <!-- These parameters are used for particle resampling, a process where the algorithm updates the particles based on sensor measurements.
+         The algorithm checks if it needs to add or remove particles based on these values and the error in the particle distribution.
+    -->
+    <param name="min_particles"             value="500"/>
+    <param name="max_particles"             value="2000"/>
+
+    <param name="kld_err"                   value="0.02"/>  <!-- related to measurment ( odometry model ) -->
+    <param name="kld_z"                   value="0.02"/>  <!-- related to measurment ( odometry model ) -->
+    
+    <!-- These parameters determine the distance or angel that the robot needs to move before the algorithm updates its position estimate
+          this helps avoid unnecessary updates when the robot is stationary or making very small movements
+    -->
+    <param name="update_min_d"              value="0.10"/>  <!-- minimum update distance -->
+    <param name="update_min_a"              value="0.10"/>  <!-- minimum update angle -->
+
+    <param name="resample_interval"         value="1"/>
+    <param name="transform_tolerance"       value="0.5"/>
+    <param name="recovery_alpha_slow"       value="0.00"/>
+    <param name="recovery_alpha_fast"       value="0.00"/>
+    <param name="initial_pose_x"            value="$(arg initial_pose_x)"/>
+    <param name="initial_pose_y"            value="$(arg initial_pose_y)"/>
+    <param name="initial_pose_a"            value="$(arg initial_pose_a)"/>
+    <param name="gui_publish_rate"          value="10.0"/>
+
+    <remap from="scan"                      to="$(arg scan_topic)"/>
+    <param name="laser_max_range"           value="8"/>
+    <param name="laser_max_beams"           value="180"/>
+    <param name="laser_z_hit"               value="0.95"/>
+    <param name="laser_z_short"             value="0.1"/>
+    <param name="laser_z_max"               value="0.05"/>
+    <param name="laser_z_rand"              value="0.05"/>
+    <param name="laser_sigma_hit"           value="0.2 "/>
+    <param name="laser_lambda_short"        value="0.1"/>
+    <param name="laser_likelihood_max_dist" value="2.0"/>
+    <param name="laser_model_type"          value="likelihood_field"/>
+
+ 
+<!-- When param use_map_topic set to true, AMCL will subscribe to the map topic rather than making a service call to receive its map. -->
+
+    <param name="use_map_topic"          value="true"/>  <!-- new parameter New in navigation 1.4.2 -->
+    <param name="odom_model_type"           value="diff"/>  <!-- Robot model type-->
+
+    <!-- 
+     These Parameters control how much noise is added to motion prediction 
+     Parameters allows you to fine-tune how much you trust the robot's odometry data for motion prediction.
+         Higher values mean you're more skeptical about the odometry's accuracy and allow for more uncertainty,
+           while lower values mean you're more confident in the odometry's accuracy and reduce the amount of noise added to the motion prediction.
+    -->
+    <param name="odom_alpha1"               value="0.2"/>   <!-- related to measurment ( odometry model )  -->
+
+    <param name="odom_alpha2"               value="0.2"/>   <!-- related to measurment ( odometry model )  -->
+
+    <param name="odom_alpha3"               value="0.2"/>   <!-- related to measurment ( odometry model )  -->
+
+    <param name="odom_alpha4"               value="0.2"/>   <!-- related to measurment ( odometry model )  -->
+
+    <param name="odom_frame_id"             value="odom"/>  <!-- odom frame topic --> 
+    
+    <param name="base_frame_id"             value="base_link"/>
+
+    <param name="global_frame_id"             value="map"/>
+
+  </node>
+</launch>

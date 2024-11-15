@@ -1,0 +1,25 @@
+# laser_filter.yaml
+# laser_scan_filter_chain:
+#  chain:
+#    - name: cut_off_filter
+#      type: laser_filters/ScanShadowsFilter
+#      params:
+#        min_angle: -1.57  # -90 degrees in radians
+#        max_angle: 1.57   # 90 degrees in radians
+
+
+scan_filter_chain:
+- name: angle
+  type: laser_filters/LaserScanAngularBoundsFilter
+  params:
+    lower_angle: -1.57
+    upper_angle: 1.57
+
+# scan_filter_chain:
+# - name: shadows
+#   type: laser_filters/ScanShadowsFilter
+#   params:
+#     min_angle: 10
+#     max_angle: 170
+#     neighbors: 20
+#     window: 1
