@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg
+    name="base_coordinate" />
+    <param
+    name="robot_description"
+    textfile="$(find base_coordinate)/urdf/base_coordinate.urdf" />
+
+  <node
+    name="joint_state_publisher"
+    pkg="joint_state_publisher"
+    type="joint_state_publisher" />
+
+  <node
+    name="robot_state_publisher"
+    pkg="robot_state_publisher"
+    type="robot_state_publisher" />
+
+
+  <!-- AMCL -->
+      <include file="$(find navigation_pkg)/launch/amcl.launch"/>  
+
+  <!-- move_base -->
+      <include file="$(find navigation_pkg)/launch/move_base.launch"/>
+
+  <!-- Map simulation -->
+  <arg name="map_file" default="$(find base_coordinate)/map/map-collage-new.yaml"/>
+
+  <!-- Map server -->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+
+ <arg name="open_rviz" default="true"/>
+  <group if="$(arg open_rviz)"> 
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find base_coordinate)/config/navigation.rviz"/>
+  </group>
+
+  <arg name ="world" default= "$(find base_coordinate)/world/collage.world"/>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world)" />
+      <arg name="verbose" value="false" />
+      <arg name="paused" value="false"/>
+      <arg name="use_sim_time" value="true"/>
+      <arg name="gui" value="true"/>
+      <arg name="headless" value="false"/>
+      <arg name="debug" value="false"/>
+    </include>
+  
+    <node pkg="gazebo_ros" type="spawn_model" name="spawnning_model" output="screen"
+      
+      args="-urdf -param robot_description -model base_coordinate"/>
+
+  <!-- Way point node -->
+      <!-- <node
+      name="navigation_goals"
+      pkg="navigation_goals"
+      type="navigation_goals" />   -->
+
+  <!-- Lidar file  -->
+  <!-- <include file="$(find rplidar_ros)/launch/rplidar_a1.launch"/> -->
+
+
+  <!-- odometry and tf calcualtion node   -->
+    <!-- <node
+    name="odom_IMU"
+    pkg="odom_pub"
+    type="odom_IMU" />
+
+    <node
+    name="velocity_pub"
+    pkg="odom_pub"
+    type="velocity_pub" />
+
+    <node
+    name="pid_left_wheel"
+    pkg="odom_pub"
+    type="pid_left_wheel" />
+
+    <node
+    name="pid_right_wheel"
+    pkg="odom_pub"
+    type="pid_right_wheel" /> -->
+
+
+<!-- Launch 2 Arduino boards -->
+<!-- <node
+pkg="rosserial_python"
+type="serial_node.py"
+name="ArduinoZero"
+args="/dev/ttyUSB0"
+>
+<param name="baud" value="115200" /> 
+</node>
+
+<node
+pkg="rosserial_python"
+type="serial_node.py"
+name="ArduinoOne"
+args="/dev/ttyUSB1"
+>
+<param name="baud" value="115200" /> 
+ 
+</node> -->
+
+<!-- GIF Display on screen -->
+    <!-- <node
+    pkg="gif_display"
+    type="gif.py"
+    name="gif"
+    output="screen"/> -->
+
+    <!-- Filtered scan node ( Commented because included in lidar launch file ) -->
+    <!-- <node name="lidar_filtered" pkg="odom_pub" type="lidar_filtered.py"/> -->
+
+
+</launch>

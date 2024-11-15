@@ -1,0 +1,69 @@
+<launch>
+    <param name="use_sim_time" value="false"/>  <!-- If you are using simulation set to "true" -->
+
+      <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+      
+      <remap from="scan" to="/filtered_scan"/>
+      
+      <param name="map_update_interval" value="2.0"/> <!-- Specifies how long would it take to update the map (in seconds) - less values will update the map more frequently but will consume more computational power -->
+      
+      <param name="maxRange" value="10.0"/>
+
+      <param name="maxUrange" value="9.5"/>  <!-- It sets the maximum limit for the lasser scanner and ranges after that will be ignored-->
+
+      <param name="sigma" value="0.05"/>  <!-- It represents the standard deviation of sensor noise model, it affects how much noise is added to the sensor readings during the map updates-->
+      
+      <param name="kernelSize" value="1"/> <!-- This parameter determines the size of the kernel used in the computation of the occupancy grid. Larger kernel sizes result in smoother maps but may decrease the ability to capture fine details -->
+      
+      <param name="lstep" value="0.05"/> 
+      
+      <param name="astep" value="0.05"/>
+      
+      <param name="iterations" value="5"/> <!-- Number of iterations to apply particle filter per scan -->
+      
+      <param name="lsigma" value="0.075"/>
+      
+      <param name="ogain" value="3.0"/>
+      
+      <param name="lskip" value="0"/>
+      
+      <param name="srr" value="0.1"/>
+      
+      <param name="srt" value="0.2"/>
+      
+      <param name="str" value="0.1"/>
+      
+      <param name="stt" value="0.2"/>
+      
+      <param name="linearUpdate" value="0.1"/> <!-- was 1.0 -->
+      
+      <param name="angularUpdate" value="0.1"/> <!-- was 0.5 -->
+      
+      <param name="temporalUpdate" value="1.0"/>  <!-- was 3.0 -->
+      
+      <param name="resampleThreshold" value="0.5"/>
+
+      <!-- This parameter sets the number of particles used in the particle filter for localization. More particles improve localization accuracy but increase computational cost-->
+      <param name="particles" value="200"/>
+      
+      <!-- initial map sizes -->
+      <param name="xmin" value="-10.0"/>
+      
+      <param name="ymin" value="-10.0"/>
+      
+      <param name="xmax" value="10.0"/>
+       
+      <param name="ymax" value="10.0"/>
+      
+      <param name="delta" value="0.05"/>  <!-- Resolution of each grid cell ( Size in meters ) more of it will require mre compuational power -->
+      
+      <param name="llsamplerange" value="0.01"/>
+      
+      <param name="llsamplestep" value="0.01"/>
+      
+      <param name="lasamplerange" value="0.005"/>
+      
+      <param name="lasamplestep" value="0.005"/>
+    
+    </node>
+</launch>

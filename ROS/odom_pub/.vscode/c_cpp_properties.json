@@ -1,0 +1,28 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/mohamed/work_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/mohamed/work_ws/src/imu_tools/imu_complementary_filter/include/**",
+        "/home/mohamed/work_ws/src/imu_tools/imu_filter_madgwick/include/**",
+        "/home/mohamed/work_ws/src/Graduation/manual_move/include/**",
+        "/home/mohamed/work_ws/src/move/include/**",
+        "/home/mohamed/work_ws/src/Graduation/navigation_goals/include/**",
+        "/home/mohamed/work_ws/src/Graduation/odom_pub/include/**",
+        "/home/mohamed/work_ws/src/robot_pose_ekf/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
